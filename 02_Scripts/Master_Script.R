@@ -1,0 +1,15 @@
+#ECOROOF ANALYSIS MASTER SCRIPT
+
+#LOAD RELEVENT LIBRARIES
+source("02_Scripts/Libraries.R")
+
+#UPLOAD RAIN DATA, CLEAN, FILTER, AND PARSE STORMS
+source("02_Scripts/Preciptation_Storm.R")
+
+#UPLOAD FLOW DATA AND PARSE STORMS
+source("02_Scripts/Flow.R")
+
+#UPLOAD CHEMISTRY DATA 
+source("02_Scripts/Chemistry.R")
+
+
