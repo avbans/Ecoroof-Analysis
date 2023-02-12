@@ -22,10 +22,12 @@ chemistry[["nutrients"]] <-read.csv("01_Input/smartchem.csv")%>%
                values_to = "ppm")
 
 chemistry[["full"]] <-rbind(chemistry[["metals"]],
-                            chemistry[["nutrients"]])
+                            chemistry[["nutrients"]])%>%
+  filter(datetime < as_date("2019/06/01"),
+         datetime > as_date("2018/09/01"),
+         month(datetime) != "10")
 
 
-chemistry[["storms"]]<- parse_dates(df = chemistry[["full"]],
-                                          df2 = storms)
+#chemistry[["storms"]]<- parse_dates(df = chemistry[["full"]],df2 = storms)
 
 

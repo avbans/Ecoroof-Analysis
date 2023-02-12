@@ -2,7 +2,7 @@
 flow<-list()
 
 flow[["con"]]<-read_csv("01_Input/flow_conroof.csv")%>%
-  mutate(roof="conventional")%>%
+  mutate(roof="con")%>%
   clean_names()%>%
   rename(datetime = we3datetime,
          flow_l_s = we3flow_l_s)
@@ -17,17 +17,16 @@ flow[["eco"]]<-read_csv("01_Input/flow_ecoroof.csv")%>%
 flow[["roof"]]<-rbind(flow[["con"]],
                       flow[["eco"]])%>%
   mutate(datetime =mdy_hm(datetime),
-         flow_l = flow_l_s * 60 * 5)%>%
+         flow_l = flow_l_s * 300)%>%
   filter(datetime < as_date("2019/06/01"),
          datetime > as_date("2018/09/01"),
-         flow_l_s >0.04)
-
+         month(datetime) != "10")
 
 flow[["storms"]]<-crossing(flow$roof,storm_parser)%>%
-  filter(datetime >= eventstart)%>%
-  select(-c(eventstart,eventend))
+  filter(datetime >= eventstart,
+         datetime <= eventstop)%>%
+  select(-c(eventstart,eventstop))
 
-
-
-
+flow[["storms"]]<-flow[["storms"]]%>%
+  filter(flow_l_s >= 0.04)
 
