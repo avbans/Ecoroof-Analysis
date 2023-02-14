@@ -12,8 +12,8 @@ source("02_Scripts/Discharge.R")
 #UPLOAD CHEMISTRY DATA 
 source("02_Scripts/Chemistry.R")
 
-#CALCULATE RETENTION
-source("02_Scripts/Runoff_Retention.R")
+#CALCULATE LOADING 
+source("02_Scripts/Load.R")
 
-#CALCULATE LOAD
-
+#EXPORT DATA FRAMES 
+source("02_Scripts/Outputting.R")

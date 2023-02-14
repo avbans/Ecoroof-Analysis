@@ -1,11 +1,12 @@
-#PRECIPITATION ANALYSIS AND STORM PARSING 
-catchment_size<-list()
-catchment_size[["con_m2"]] = 1462
-catchment_size[["eco_m2"]] = 1200
+# THIS SCRIPT UPLOADS RAIN DATA AND PARSES STORMS FROM THE DATA 
 
-rain<-list()
+# DETERMINE CATCHMENT SIZE FOR BOTH ROOFS 
+catch_size<-list()
+catch_size[["con_m2"]] = 1462
+catch_size[["eco_m2"]] = 1200
 
-rain[["full"]] <- read_csv("01_Input/rain.csv")%>%
+# UPLOAD DATA, QC BASED ON DOWNTIME, CONVERT INCHES TO MM, TIDY, AND FILTER DATES 
+rain <- read_csv("01_Input/rain.csv")%>%
   clean_names()%>%
   filter(downtime == FALSE)%>%
   mutate(depth_mm = rainfall_amount_inches* 25.4)%>%
@@ -26,26 +27,18 @@ rain[["full"]] <- read_csv("01_Input/rain.csv")%>%
          datetime > as_date("2018/09/01"),
          month(datetime) != "10")
 
-storms <-parse_storms(df=rain[["full"]],
+# SEPERATE STORMS OUT OF RAIN DATA 
+storms <-parse_storms(df=rain,
                         intervals_per_hr = 12,
                         interevent_period_hr = 24,
                         storm_size_minimum = 5.08)
 
-
-#rain[["storms"]] <- parse_dates(df=rain[["full"]],df2 =storms)
-
-storm_parser<-storms%>%
+# MAKE EVENTSTOP THE START OF THE NEXT EVENT AND FILL LAST STOP TIME WITH END TIME
+storms<-storms%>%
   mutate(eventstop = lead(eventstart,n=1))%>%
   mutate(eventstop = coalesce(eventstop,eventend))%>%
   select(storm_id, eventstart,eventstop)
 
-rain[["storms"]]<-crossing(rain$full,storm_parser)%>%
-  filter(datetime >= eventstart,
-         datetime <= eventstop)%>%
-  select(-c(eventstart,eventstop))
-
-
-rain[["storms"]]<-rain[["storms"]]%>%
-  mutate(rainfall_con_l = depth_mm* catchment_size$con_m2,
-         rainfall_eco_l = depth_mm* catchment_size$eco_m2)
+#IDENTIFY WHAT STORM EACH RAIN OBSERVATION BELONGS TO (may not need this)
+#rain<-crossing(rain,storms)%>%filter(datetime >= eventstart,datetime < eventstop)%>%select(-c(eventstart,eventstop))
 

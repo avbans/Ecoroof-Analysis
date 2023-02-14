@@ -1,32 +1,44 @@
-#THIS SCRIPT UPLOADS FLOW DATA FOR BOTH ROOFS AND PROCESSES THEM
-flow<-list()
+# THIS SCRIPT UPLOADS FLOW DATA FOR BOTH ROOFS, PROCESSES THEM, AND ID'S WHAT 
+# STORM THEY BELONG TO 
 
-flow[["con"]]<-read_csv("01_Input/flow_conroof.csv")%>%
+# UPLOAD DISCHARGE FOR THE CONVENTIONAL ROOF AND CLEAN 
+discharge_con<-read_csv("01_Input/flow_conroof.csv")%>%
   mutate(roof="con")%>%
   clean_names()%>%
   rename(datetime = we3datetime,
          flow_l_s = we3flow_l_s)
 
-flow[["eco"]]<-read_csv("01_Input/flow_ecoroof.csv")%>%
+# UPLOAD DISCHARGE FOR THE ECOROOF AND CLEAN 
+discharge_eco<-read_csv("01_Input/flow_ecoroof.csv")%>%
   select(-c("...1"))%>%
   mutate(roof="eco")%>%
   clean_names()%>%
   rename(datetime = we2datetime,
          flow_l_s = we2flow_l_s)
 
-flow[["roof"]]<-rbind(flow[["con"]],
-                      flow[["eco"]])%>%
-  mutate(datetime =mdy_hm(datetime),
-         flow_l = flow_l_s * 300)%>%
+#COMBINE ROOF DATA SETS AND FILTER BY DATES. REMOVE OLD DATAFRAMES. Calculate 
+#INTEGRATE DISCHARGE W/ RESPECT TO DATETIME NUMERICALLY USING TRAPAZOIDAL RULE (Option 2)
+
+discharge<-rbind(discharge_con,
+                 discharge_eco)%>%
+  mutate(datetime =mdy_hm(datetime))%>%
   filter(datetime < as_date("2019/06/01"),
          datetime > as_date("2018/09/01"),
-         month(datetime) != "10")
+         month(datetime) != "10")%>%
+  mutate(dt = abs(as.numeric(difftime(datetime,lead(datetime), units ="secs"))),
+         dt = ifelse(dt != 300, 0, dt),
+         volume_l = 0.5*dt*(lead(flow_l_s)+lag(flow_l_s)))%>%
+  select(-c("dt"))
 
-flow[["storms"]]<-crossing(flow$roof,storm_parser)%>%
+
+remove(discharge_con,discharge_eco)
+
+
+# IDENTIFY WHAT STORM EACH DISCHARGE OBSERVATION BELONGS TO, REMOVE FLOW NOISE 
+discharge<-crossing(discharge,storms)%>%
   filter(datetime >= eventstart,
-         datetime <= eventstop)%>%
-  select(-c(eventstart,eventstop))
-
-flow[["storms"]]<-flow[["storms"]]%>%
+         datetime < eventstop)%>%
+  select(-c(eventstart,eventstop))%>%
   filter(flow_l_s >= 0.04)
+
 

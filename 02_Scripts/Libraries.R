@@ -5,6 +5,9 @@ library(tidyverse)
 library(janitor)
 library(fedmatch)
 
+#CALCULATING GEOMETRIC MEAN 
+library(psych)
+
 #FOR WORKING WITH DATES
 library(lubridate)
 
