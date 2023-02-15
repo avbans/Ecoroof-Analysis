@@ -27,7 +27,7 @@ discharge<-rbind(discharge_con,
          month(datetime) != "10")%>%
   mutate(dt = abs(as.numeric(difftime(datetime,lead(datetime), units ="secs"))),
          dt = ifelse(dt != 300, 0, dt),
-         volume_l = 0.5*dt*(lead(flow_l_s)+lag(flow_l_s)))%>%
+         volume_l = 0.5*dt*(flow_l_s+lead(flow_l_s)))%>%
   select(-c("dt"))
 
 

@@ -31,15 +31,11 @@ rain <- read_csv("01_Input/rain.csv")%>%
 # SEPERATE STORMS OUT OF RAIN DATA 
 storms <-parse_storms(df=rain,
                         intervals_per_hr = 12,
-                        interevent_period_hr = 24,
-                        storm_size_minimum = 5.08)
+                        interevent_period_hr = 72,
+                        storm_size_minimum = 2.54)
 
 # MAKE EVENTSTOP THE START OF THE NEXT EVENT AND FILL LAST STOP TIME WITH END TIME
 storms<-storms%>%
   mutate(eventstop = lead(eventstart,n=1))%>%
   mutate(eventstop = coalesce(eventstop,eventend))%>%
   select(storm_id, eventstart,eventstop,total_depth_mm)
-
-#IDENTIFY WHAT STORM EACH RAIN OBSERVATION BELONGS TO (may not need this)
-#rain<-crossing(rain,storms)%>%filter(datetime >= eventstart,datetime < eventstop)%>%select(-c(eventstart,eventstop))
-
