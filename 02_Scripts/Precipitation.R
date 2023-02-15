@@ -27,6 +27,7 @@ rain <- read_csv("01_Input/rain.csv")%>%
          datetime > as_date("2018/09/01"),
          month(datetime) != "10")
 
+
 # SEPERATE STORMS OUT OF RAIN DATA 
 storms <-parse_storms(df=rain,
                         intervals_per_hr = 12,
@@ -37,7 +38,7 @@ storms <-parse_storms(df=rain,
 storms<-storms%>%
   mutate(eventstop = lead(eventstart,n=1))%>%
   mutate(eventstop = coalesce(eventstop,eventend))%>%
-  select(storm_id, eventstart,eventstop)
+  select(storm_id, eventstart,eventstop,total_depth_mm)
 
 #IDENTIFY WHAT STORM EACH RAIN OBSERVATION BELONGS TO (may not need this)
 #rain<-crossing(rain,storms)%>%filter(datetime >= eventstart,datetime < eventstop)%>%select(-c(eventstart,eventstop))

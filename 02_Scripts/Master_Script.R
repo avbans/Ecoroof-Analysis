@@ -15,5 +15,8 @@ source("02_Scripts/Chemistry.R")
 #CALCULATE LOADING 
 source("02_Scripts/Load.R")
 
+#CALCULATE TOTAL RUNOFF VOLUME AND RUNOFF RETENTION RATE FOR SAMPLING PERIOD 
+source("02_Scripts/Retention.R")
+
 #EXPORT DATA FRAMES 
 source("02_Scripts/Outputting.R")

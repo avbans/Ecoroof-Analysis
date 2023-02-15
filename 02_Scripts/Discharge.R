@@ -38,7 +38,5 @@ remove(discharge_con,discharge_eco)
 discharge<-crossing(discharge,storms)%>%
   filter(datetime >= eventstart,
          datetime < eventstop)%>%
-  select(-c(eventstart,eventstop))%>%
+  select(-c(eventstart,eventstop,total_depth_mm))%>%
   filter(flow_l_s >= 0.04)
-
-

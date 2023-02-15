@@ -15,11 +15,8 @@ load <- load%>%
 
 #SUMMARIZE RESULTS BY STORM AND ROOF TYPE 
 load <- load%>%
-  group_by(pollutant,roof)%>%
+  group_by(storm_id,pollutant,roof)%>%
   summarise(p_mg_m2 = sum(p_mg_m2))%>%
   na.omit()
 
-load%>%group_by(roof,pollutant)%>%
-ggplot()+
-  geom_col(aes(roof,p_mg_m2))+
-  facet_wrap(~pollutant, scale ="free")
+
