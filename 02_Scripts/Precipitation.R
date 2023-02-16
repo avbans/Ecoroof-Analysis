@@ -5,8 +5,10 @@ catch_size<-list()
 catch_size[["con_m2"]] = 1462
 catch_size[["eco_m2"]] = 1200
 
+rain<-list()
+
 # UPLOAD DATA, QC BASED ON DOWNTIME, CONVERT INCHES TO MM, TIDY, AND FILTER DATES 
-rain <- read_csv("01_Input/rain.csv")%>%
+rain[["raw"]] <- read_csv("01_Input/rain.csv")%>%
   clean_names()%>%
   filter(downtime == FALSE)%>%
   mutate(depth_mm = rainfall_amount_inches* 25.4)%>%
@@ -22,14 +24,16 @@ rain <- read_csv("01_Input/rain.csv")%>%
             "sensor_present",
             "downtime",
             "rainfall_amount_inches"))%>%
-  rename(datetime = end_local)%>%
+  rename(datetime = end_local)
+
+rain[["full"]] <- rain[["raw"]]%>%
   filter(datetime < as_date("2019/06/01"),
          datetime > as_date("2018/09/01"),
          month(datetime) != "10")
 
 
 # SEPERATE STORMS OUT OF RAIN DATA 
-storms <-parse_storms(df=rain,
+storms <-parse_storms(df=rain[["full"]],
                         intervals_per_hr = 12,
                         interevent_period_hr = 72,
                         storm_size_minimum = 2.54)

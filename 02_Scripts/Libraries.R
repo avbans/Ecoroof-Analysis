@@ -4,6 +4,7 @@
 library(tidyverse)
 library(janitor)
 library(fedmatch)
+library(patchwork)
 
 #CALCULATING GEOMETRIC MEAN 
 library(psych)

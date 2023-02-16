@@ -1,8 +1,8 @@
 #THIS SCRIPT DETERMINES POLLUTANT LOADING FROM DISCHARGE, AND CHEMISTRY DATAFRAMES
 
 #JOIN EMC WITH DISCHARGE DATA 
-load<- left_join(discharge,
-                 runoff_samples,
+load<- left_join(discharge[["storms"]],
+                 samples[["storms"]],
                  by = c("storm_id","roof"))%>%
   select(roof,storm_id,datetime,volume_l,pollutant,emc_ppm)
 

@@ -18,5 +18,8 @@ source("02_Scripts/Load.R")
 #CALCULATE TOTAL RUNOFF VOLUME AND RUNOFF RETENTION RATE FOR SAMPLING PERIOD 
 source("02_Scripts/Retention.R")
 
+#CREATE GRAPHS 
+source("02_Scripts/Graphs.R")
+
 #EXPORT DATA FRAMES 
 source("02_Scripts/Outputting.R")
