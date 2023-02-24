@@ -1,10 +1,16 @@
 #THIS SCRIPT DETERMINES POLLUTANT LOADING FROM DISCHARGE, AND CHEMISTRY DATAFRAMES
 
 #JOIN EMC WITH DISCHARGE DATA 
-load<- left_join(discharge[["storms"]],
+
+#GROUP DISCHARGE BY STORM AND ROOF
+discharge[["summary"]] <- discharge[["storms"]]%>%
+  group_by(storm_id, roof)%>%
+  summarise(volume_l = sum(volume_l))
+
+load<- left_join(discharge[["summary"]],
                  samples[["storms"]],
                  by = c("storm_id","roof"))%>%
-  select(roof,storm_id,datetime,volume_l,pollutant,emc_ppm)
+  select(roof,storm_id,volume_l,pollutant,emc_ppm)
 
 #CALCULATE UNIT AREA MASS LOAD OF POLLUTANTS 
 load <- load%>%
@@ -18,5 +24,3 @@ load <- load%>%
   group_by(storm_id,pollutant,roof)%>%
   summarise(p_mg_m2 = sum(p_mg_m2))%>%
   na.omit()
-
-

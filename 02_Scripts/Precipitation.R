@@ -35,8 +35,8 @@ rain[["full"]] <- rain[["raw"]]%>%
 # SEPERATE STORMS OUT OF RAIN DATA 
 storms <-parse_storms(df=rain[["full"]],
                         intervals_per_hr = 12,
-                        interevent_period_hr = 72,
-                        storm_size_minimum = 2.54)
+                        interevent_period_hr = 24,
+                        storm_size_minimum = 5.08)
 
 # MAKE EVENTSTOP THE START OF THE NEXT EVENT AND FILL LAST STOP TIME WITH END TIME
 storms<-storms%>%

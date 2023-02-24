@@ -8,10 +8,6 @@ rain[["summary"]]<-crossing(rain[["full"]],storms)%>%
   group_by(storm_id)%>%
   summarize(depth_mm = sum(depth_mm))
 
-#GROUP DISCHARGE BY STORM AND ROOF
-discharge[["summary"]]<- discharge[["storms"]]%>%
-  group_by(storm_id, roof)%>%
-  summarise(volume_l = sum(volume_l))
 
 #CREATE RETENTION DATA FRAME WITH RAIN AND DISCHARGE, CALCULATE RAINFALL VOLUMES,
 #GROUP VALUES BY ROOF TYPE AND CALCULATE RETENTION RATES

@@ -21,5 +21,5 @@ source("02_Scripts/Retention.R")
 #CREATE GRAPHS 
 source("02_Scripts/Graphs.R")
 
-#EXPORT DATA FRAMES 
+#EXPORT DATA FRAMES (to redo)
 source("02_Scripts/Outputting.R")
