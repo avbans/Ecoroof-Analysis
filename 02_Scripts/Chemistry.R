@@ -54,4 +54,4 @@ samples[["storms"]]<-crossing(samples[["storms"]],storms)%>%
 #CALCULATE EVENT MEAN FOR EACH STORM EVENT FOR EACH POLLUTANT
 samples[["storms"]] <-samples[["storms"]]%>%
   group_by(storm_id,roof, pollutant)%>%
-  summarise(emc_ppm = geometric.mean(ppm))
+  summarise(emc_ppm = mean(ppm))

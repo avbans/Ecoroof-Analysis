@@ -15,6 +15,15 @@ source("02_Scripts/Chemistry.R")
 #CALCULATE LOADING 
 source("02_Scripts/Load.R")
 
+#NORMALITY TESTING 
+source("02_Scripts/Statistics/Normality_testing.R")
+
+#PERFORM FRIEDMAN TEST 
+source("02_Scripts/Statistics/Friedman_tests.R")
+
+#CALCULATE DISTRIBUTIONS OF EACH POLLUTANT AND COMPILE STATISTICS 
+source("02_Scripts/Statistics/Distributions.R")
+
 #CALCULATE TOTAL RUNOFF VOLUME AND RUNOFF RETENTION RATE FOR SAMPLING PERIOD 
 source("02_Scripts/Retention.R")
 

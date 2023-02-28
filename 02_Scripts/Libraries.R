@@ -14,3 +14,6 @@ library(lubridate)
 
 #MY PERSONAL PACKAGE FOR HYDROLOGIC ANALYSIS
 library(bansr)
+
+#PCA ANALYSIS 
+library(factoextra)
