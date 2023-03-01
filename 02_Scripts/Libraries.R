@@ -1,13 +1,15 @@
 #THIS SCRIPT LOADS RELEVENT PACKAGES
 
-#FOR DATA MANIPULATION AND GRAPHING 
+#FOR IMPORTING DATA QUICKLY 
+library(data.table)
+
+#FOR DATA MANIPULATION AND GENERAL VISUALIZATION 
 library(tidyverse)
 library(janitor)
 library(fedmatch)
-library(patchwork)
 
-#CALCULATING GEOMETRIC MEAN 
-library(psych)
+#FOR CREATING GRAPH LAYOUTS 
+library(patchwork)
 
 #FOR WORKING WITH DATES
 library(lubridate)
@@ -15,5 +17,3 @@ library(lubridate)
 #MY PERSONAL PACKAGE FOR HYDROLOGIC ANALYSIS
 library(bansr)
 
-#PCA ANALYSIS 
-library(factoextra)

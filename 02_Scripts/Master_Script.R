@@ -3,19 +3,19 @@
 #LOAD RELEVENT LIBRARIES
 source("02_Scripts/Libraries.R")
 
-#UPLOAD RAIN DATA, CLEAN, FILTER, AND PARSE STORMS
+#IMPORT RAIN DATA, PROCESS, AND PARSE STORMS
 source("02_Scripts/Precipitation.R")
 
-#UPLOAD FLOW DATA AND PARSE STORMS
+#IMPORT DISCHARGE DATA, AND PROCESS 
 source("02_Scripts/Discharge.R")
 
-#UPLOAD CHEMISTRY DATA 
+#IMPORT POLLUTANT SAMPLE RESULTS AND PROCESS 
 source("02_Scripts/Chemistry.R")
 
-#CALCULATE LOADING 
+#CALCULATE UNIT AREA LOADING OF POLLUTANTS 
 source("02_Scripts/Load.R")
 
-#NORMALITY TESTING 
+#TEST THE UNIT AREA LOADS FOR NORMALITY ASSUMPTIONS 
 source("02_Scripts/Statistics/Normality_testing.R")
 
 #PERFORM FRIEDMAN TEST 
@@ -29,6 +29,3 @@ source("02_Scripts/Retention.R")
 
 #CREATE GRAPHS 
 source("02_Scripts/Graphs.R")
-
-#EXPORT DATA FRAMES (to redo)
-source("02_Scripts/Outputting.R")

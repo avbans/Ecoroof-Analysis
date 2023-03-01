@@ -4,31 +4,29 @@
 discharge <- list()
 
 # UPLOAD DISCHARGE FOR THE CONVENTIONAL ROOF AND CLEAN 
-discharge[["con"]]<-read_csv("01_Input/flow_conroof.csv")%>%
-  mutate(roof="con")%>%
-  clean_names()%>%
-  rename(datetime = we3datetime,
-         flow_l_s = we3flow_l_s)
+discharge[["con"]] <-fread("01_Input/Discharge/flow_conroof.csv")%>%
+  mutate(roof="con")
 
-# UPLOAD DISCHARGE FOR THE ECOROOF AND CLEAN 
-discharge[["eco"]]<-read_csv("01_Input/flow_ecoroof.csv")%>%
-  select(-c("...1"))%>%
+# UPLOAD DISCHARGE FOR THE ECOROOF AND CLEAN
+#REMOVED ONE SINGLE MEASUREMENT OF MISFIRE FROM THE SENSOR 
+discharge[["eco"]] <- fread("01_Input/Discharge/flow_ecoroof.csv")%>%
   mutate(roof="eco")%>%
-  clean_names()%>%
-  rename(datetime = we2datetime,
-         flow_l_s = we2flow_l_s)%>%
-  filter(flow_l_s <= 13)
+  filter(flow_l_s != max(flow_l_s))
 
-#COMBINE ROOF DATA SETS AND FILTER BY DATES. REMOVE OLD DATAFRAMES. Calculate 
-#INTEGRATE DISCHARGE W/ RESPECT TO DATETIME NUMERICALLY USING TRAPAZOIDAL RULE (Option 2)
+
+#COMBINE DISCHARGE FOR BOTH ROOFS  
 discharge[["full"]]<-rbind(discharge[["con"]],
                            discharge[["eco"]])%>%
   mutate(datetime =mdy_hm(datetime))
 
+#FILTER BY PROJECT DATES AND MONTH THAT CONVENTIONAL ROOF SENSOR WAS BROKEN 
 discharge[["storms"]]<- discharge[["full"]]%>%
   filter(datetime < as_date("2019/06/01"),
          datetime > as_date("2018/09/01"),
-         month(datetime) != "10")%>%
+         month(datetime) != "10")
+
+#INTEGRATE DISCHARGE W/ RESPECT TO DATETIME NUMERICALLY USING TRAPAZOIDAL RULE
+discharge[["storms"]] <- discharge[["storms"]]%>%
   mutate(dt = abs(as.numeric(difftime(datetime,lead(datetime), units ="secs"))),
          dt = ifelse(dt != 300, 0, dt),
          volume_l = 0.5*dt*(flow_l_s+lead(flow_l_s)))%>%
