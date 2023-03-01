@@ -1,19 +1,23 @@
 #THIS SCRIPT LOADS RELEVENT PACKAGES
 
+#MY PERSONAL PACKAGE FOR HYDROLOGIC ANALYSIS
+library(bansr)
+
 #FOR IMPORTING DATA QUICKLY 
 library(data.table)
 
 #FOR DATA MANIPULATION AND GENERAL VISUALIZATION 
 library(tidyverse)
 library(janitor)
-library(fedmatch)
-
-#FOR CREATING GRAPH LAYOUTS 
-library(patchwork)
 
 #FOR WORKING WITH DATES
 library(lubridate)
 
-#MY PERSONAL PACKAGE FOR HYDROLOGIC ANALYSIS
-library(bansr)
+#FOR CREATING GRAPH LAYOUTS 
+library(patchwork)
+
+#ADDITIONAL GRAPH THEMES
+library(ggthemes)
+
+
 

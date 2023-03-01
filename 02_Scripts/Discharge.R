@@ -17,7 +17,8 @@ discharge[["eco"]] <- fread("01_Input/Discharge/flow_ecoroof.csv")%>%
 #COMBINE DISCHARGE FOR BOTH ROOFS  
 discharge[["full"]]<-rbind(discharge[["con"]],
                            discharge[["eco"]])%>%
-  mutate(datetime =mdy_hm(datetime))
+  mutate(datetime =mdy_hm(datetime),
+         flow_l_s = signif(flow_l_s,3))
 
 #FILTER BY PROJECT DATES AND MONTH THAT CONVENTIONAL ROOF SENSOR WAS BROKEN 
 discharge[["storms"]]<- discharge[["full"]]%>%

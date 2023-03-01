@@ -27,5 +27,6 @@ source("02_Scripts/Statistics/Distributions.R")
 #CALCULATE TOTAL RUNOFF VOLUME AND RUNOFF RETENTION RATE FOR SAMPLING PERIOD 
 source("02_Scripts/Retention.R")
 
-#CREATE GRAPHS 
+#CREATE AND EXPORT GRAPHS 
 source("02_Scripts/Graphs.R")
+

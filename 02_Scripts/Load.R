@@ -9,9 +9,10 @@ catch_size[["eco_m2"]] = 1200
 discharge[["summary"]] <- discharge[["storms"]]%>%
   group_by(storm_id, roof)%>%
   summarise(volume_l = sum(volume_l))
+  
 
 #JOIN EMC WITH DISCHARGE DATA 
-load<- left_join(discharge[["summary"]],
+load <- left_join(discharge[["summary"]],
                  samples[["storms"]],
                  by = c("storm_id","roof"))%>%
   select(roof,storm_id,volume_l,pollutant,emc_ppm)%>%
@@ -27,7 +28,8 @@ load <- load%>%
 #SUMMARIZE RESULTS BY STORM AND ROOF TYPE 
 load <- load%>%
   group_by(storm_id,pollutant,roof)%>%
-  summarise(p_mg_m2 = sum(p_mg_m2))
+  summarise(p_mg_m2 = sum(p_mg_m2))%>%
+  mutate(p_mg_m2 = signif(p_mg_m2,3))
 
 #EXPORT LOADING RESULTS FOR EACH POLLUTANT, FOR EACH ROOF, FOR EACH STORM EVENT 
-write.csv(load,"unit_area_load.csv")
+write.csv(load,"03_Output/unit_area_load.csv")

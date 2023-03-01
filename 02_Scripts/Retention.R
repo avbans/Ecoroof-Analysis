@@ -6,7 +6,8 @@ rain[["summary"]]<-crossing(rain[["full"]],storms)%>%
          datetime < eventstop)%>%
   select(-c(eventstart,eventstop,total_depth_mm))%>%
   group_by(storm_id)%>%
-  summarize(depth_mm = sum(depth_mm))
+  summarize(depth_mm = sum(depth_mm))%>%
+  mutate(depth_mm = signif(depth_mm,3))
 
 
 #CREATE RETENTION DATA FRAME WITH RAIN AND DISCHARGE, CALCULATE RAINFALL VOLUMES,
@@ -19,6 +20,10 @@ retention<- left_join(discharge[["summary"]],rain[["summary"]],by = "storm_id")%
   group_by(roof)%>%
   summarize(volume_l = sum(volume_l),
             rainfall_l = sum(rainfall_l))%>%
-  mutate(retention = (((rainfall_l - volume_l) / rainfall_l) *100))
+  mutate(volume_l = signif(volume_l,3),
+         rainfall_l = signif(rainfall_l,3),
+    retention = (((rainfall_l - volume_l) / rainfall_l) *100),
+         retention = signif(retention,3))
 
+write.csv(retention,"03_Output/retention.csv")
 

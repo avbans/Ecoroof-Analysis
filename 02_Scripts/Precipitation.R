@@ -22,7 +22,8 @@ rain[["full"]] <- rain[["raw"]]%>%
 storms <-parse_storms(df=rain[["full"]],
                         intervals_per_hr = 12,
                         interevent_period_hr = 24,
-                        storm_size_minimum = 5.08)
+                        storm_size_minimum = 5.08)%>%
+  mutate(total_depth_mm = signif(total_depth_mm,3))
 
 #EXPORT GENERAL STORM DATA 
 write.csv(storms,"03_Output/storm_log.csv")

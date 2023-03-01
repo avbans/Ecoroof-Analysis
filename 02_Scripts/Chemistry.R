@@ -40,7 +40,8 @@ samples[["full"]] <- rbind(samples[["metals"]],
                       samples[["nutrients"]])%>%
   mutate(roof = ifelse(roof == "we2",
                        "eco",
-                       "con")) 
+                       "con"),
+         ppm = signif(ppm,5)) 
 
 #EXPORT FULL SAMPLING CHEMISTRY RESULTS 
 write.csv(samples[["full"]], "03_Output/full_sample_results.csv")
@@ -60,4 +61,5 @@ samples[["storms"]]<-crossing(samples[["storms"]],storms)%>%
 #CALCULATE EVENT MEAN FOR EACH STORM EVENT FOR EACH POLLUTANT
 samples[["storms"]] <-samples[["storms"]]%>%
   group_by(storm_id,roof, pollutant)%>%
-  summarise(emc_ppm = mean(ppm))
+  summarise(emc_ppm = mean(ppm),
+            emc_ppm = signif(emc_ppm,5))

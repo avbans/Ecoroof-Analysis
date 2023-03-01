@@ -3,10 +3,11 @@
 
 #DETERMINE THE N, MIN, MAX, IQR AND MEDIAN VALUES OF EACH POLLUTANT
 statistics[["distributions"]] <- load%>%
+  mutate(p_mg_m2 = signif(p_mg_m2,3))%>%
   group_by(pollutant,roof)%>%
   summarise(n = n_distinct(storm_id),
             min = min(p_mg_m2),
-            iqr = IQR(p_mg_m2),
+            iqr = signif(IQR(p_mg_m2),3),
             max = max(p_mg_m2),
             median = median(p_mg_m2))
 
