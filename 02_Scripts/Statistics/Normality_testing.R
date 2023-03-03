@@ -21,7 +21,8 @@ statistics[["log_normality"]]  <- load%>%
   rename(p_value = p.value)%>%
   mutate(p_value = round(p_value,3), 
          normality = ifelse(p_value > 0.05, "normal","nonnormal"))%>%
-  filter(normality == "normal")
+  filter(normality == "normal")%>%
+  arrange(pollutant)
 
 #EXPORT SHAPIRO TEST RESULTS FOR LOG TRANSFOMRED POLLUTANT DATA 
-write.csv(statistics[["log_normality"]], "03_Output/log_normality_testing.csv")
+write.csv(statistics[["log_normality"]], "03_Output/08_log_normality_testing.csv")

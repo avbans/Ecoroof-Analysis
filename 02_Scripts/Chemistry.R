@@ -43,9 +43,6 @@ samples[["full"]] <- rbind(samples[["metals"]],
                        "con"),
          ppm = signif(ppm,5)) 
 
-#EXPORT FULL SAMPLING CHEMISTRY RESULTS 
-write.csv(samples[["full"]], "03_Output/full_sample_results.csv")
-
 #FILTER POLLUTANTS BY STUDY TIMES 
 samples[["storms"]] <- samples[["full"]]%>%
   filter(datetime < as_date("2019/06/01"),

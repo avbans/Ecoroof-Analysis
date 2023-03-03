@@ -12,7 +12,7 @@ statistics[["distributions"]] <- load%>%
             median = median(p_mg_m2))
 
 #EXPORT SUMMARY DISTRIBUTIONS OF EACH POLLUTANT FOR EACH ROOF 
-write.csv(statistics[["distributions"]],
+write.csv(statistics[["07_distributions"]],
           "03_Output/summary_statistics.csv")
 
 #SEPERATE MEDIAN BY ROOF AND DETERMINE WHICH MEDIAN IS HIGHER
@@ -32,4 +32,4 @@ statistics[["distributions_summary"]] <- left_join(statistics[["distributions_su
 
 #EXPORT LOADING ANALYSIS 
 write_csv(statistics[["distributions_summary"]],
-          "03_Output/loading_statistics.csv")
+          "03_Output/09_loading_statistics.csv")

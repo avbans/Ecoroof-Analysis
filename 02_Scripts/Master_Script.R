@@ -30,3 +30,8 @@ source("02_Scripts/Retention.R")
 #CREATE AND EXPORT GRAPHS 
 source("02_Scripts/Graphs.R")
 
+#COMPILE MARKDOWN REPORT 
+source("02_Scripts/Report.R")
+
+#EXPORT MARKDOWN REPORT 
+source("02_Scripts/Exporting_Report.R")

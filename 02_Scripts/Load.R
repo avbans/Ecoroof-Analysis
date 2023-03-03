@@ -30,6 +30,3 @@ load <- load%>%
   group_by(storm_id,pollutant,roof)%>%
   summarise(p_mg_m2 = sum(p_mg_m2))%>%
   mutate(p_mg_m2 = signif(p_mg_m2,3))
-
-#EXPORT LOADING RESULTS FOR EACH POLLUTANT, FOR EACH ROOF, FOR EACH STORM EVENT 
-write.csv(load,"03_Output/unit_area_load.csv")

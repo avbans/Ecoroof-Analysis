@@ -25,5 +25,5 @@ retention<- left_join(discharge[["summary"]],rain[["summary"]],by = "storm_id")%
     retention = (((rainfall_l - volume_l) / rainfall_l) *100),
          retention = signif(retention,3))
 
-write.csv(retention,"03_Output/retention.csv")
+write.csv(retention,"03_Output/10_retention.csv")
 

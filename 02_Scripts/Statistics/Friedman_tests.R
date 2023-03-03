@@ -16,5 +16,3 @@ statistics[["friendman"]] <- statistics[["friendman"]] %>%
   select(-c("parameter","method"))%>%
   rename(p_value = p.value)%>%
   mutate(p_value = round(p_value,4))
-
-write.csv(statistics[["friendman"]],"03_Output/friendman_test_results.csv")

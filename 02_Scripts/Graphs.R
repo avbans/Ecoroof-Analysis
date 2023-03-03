@@ -46,7 +46,7 @@ remove(c)
 graphs[["rain/discharge"]] <- (graphs[["rain"]]/graphs[["discharge"]]+
                                  plot_layout(nrow = 2, heights =c(2,8)))
 #PRINT GRAPH 
-ggsave(plot = graphs[["rain/discharge"]], "03_Output/rain_discharge_sampling.png",
+ggsave(plot = graphs[["rain/discharge"]], "03_Output/03_rain_discharge_sampling.png",
        unit = "cm", width = 30, height = 20)
 
 #GRAPH OF ROOF DISCHARGE PER STORM EVENT 
@@ -57,8 +57,9 @@ graphs[["discharge_storms"]] <-  ggplot(discharge$storms)+
        y = "Discharge (L/s)",
        color = "Roof Type")+
   theme_hc(style = "darkunica")+
-  facet_wrap(~storm_id, scale = "free")+
-  ggsave("03_Output/storm_discharges.png", units = "cm", width = 30, height = 20)
+  facet_wrap(~storm_id, scale = "free")
+
+ggsave("03_Output/02_storm_discharges.png", units = "cm", width = 30, height = 20)
 
 #RUNOFF CHEMISTRY SAMPLE BOX PLOT 
 graphs[["chemimstry_boxplot"]] <- samples[["full"]]%>%
@@ -68,9 +69,12 @@ graphs[["chemimstry_boxplot"]] <- samples[["full"]]%>%
   labs(x = "Roof",
        y = "Log10 (mg/L + 1)")+
   theme_hc(style = "darkunica")+
-  facet_wrap(~pollutant,scale = "free")+
-  ggsave("03_Output/runoffsample_boxplot.png",units = "cm",
-         width = 30, height = 20)
+  facet_wrap(~pollutant,scale = "free")
+
+ggsave("03_Output/04_runoffsample_boxplot.png",
+       units = "cm",
+       width = 30, 
+       height = 20)
 
 
 #EMC OVER TIME 
@@ -82,8 +86,9 @@ graphs[["emc"]] <- samples[["storms"]]%>%
        y = "EMC (mg/L)",
        color = "Roof Type")+
   theme_hc(style = "darkunica")+
-  facet_wrap(~pollutant, scale="free")+
-  ggsave("03_Output/EMC.png", units = "cm", height = 20, width = 30)
+  facet_wrap(~pollutant, scale="free")
+
+ggsave("03_Output/05_EMC.png", units = "cm", height = 20, width = 30)
 
 
 #CUMULATIVE SUM UNIT AREA LOADING FOR SAMPLE STUDY 
@@ -98,6 +103,6 @@ graphs[["load_cumsum"]] <- load%>%
        y = "Unit Area Load (mg/sq. meter)",
        color = "Roof Type")+
   theme_hc(style = "darkunica")+
-  facet_wrap(~pollutant, scale ="free")+
-  ggsave("03_Output/cum_unit_area_load.png", units = "cm", width = 30, height = 20)
+  facet_wrap(~pollutant, scale ="free")
 
+ggsave("03_Output/06_cum_unit_area_load.png", units = "cm", width = 30, height = 20)
