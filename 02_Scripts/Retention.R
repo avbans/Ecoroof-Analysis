@@ -1,10 +1,7 @@
 #CALCULATE TOTAL RUNOFF VOLUME AND RUNOFF RETENTION RATE FOR SAMPLING PERIOD 
 
 #PARSE RAIN BY STORM START AND END TIMES AND CONVERT FROM MM TO M 
-rain[["summary"]]<-crossing(rain[["full"]],storms)%>%
-  filter(datetime >= eventstart,
-         datetime < eventstop)%>%
-  select(-c(eventstart,eventstop,total_depth_mm))%>%
+rain[["summary"]] <- rain[["storms"]]%>%
   group_by(storm_id)%>%
   summarize(depth_mm = sum(depth_mm))%>%
   mutate(depth_mm = signif(depth_mm,3))
@@ -22,8 +19,6 @@ retention<- left_join(discharge[["summary"]],rain[["summary"]],by = "storm_id")%
             rainfall_l = sum(rainfall_l))%>%
   mutate(volume_l = signif(volume_l,3),
          rainfall_l = signif(rainfall_l,3),
-    retention = (((rainfall_l - volume_l) / rainfall_l) *100),
+         retention = (((rainfall_l - volume_l) / rainfall_l) *100),
          retention = signif(retention,3))
-
-write.csv(retention,"03_Output/10_retention.csv")
-
+  

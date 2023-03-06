@@ -19,19 +19,23 @@ rain[["full"]] <- rain[["raw"]]%>%
 
 
 #SEPERATE STORMS OUT OF RAIN DATA 
-storms <-parse_storms(df=rain[["full"]],
+storms_full <- parse_storms(df=rain[["full"]],
                         intervals_per_hr = 12,
                         interevent_period_hr = 24,
                         storm_size_minimum = 5.08)%>%
   mutate(total_depth_mm = signif(total_depth_mm,3))
 
-#EXPORT SUMMARY OF STORM EVENTS 
-write.csv(storms,"03_Output/01_storm_events.csv")
-
 # MAKE EVENTSTOP THE START OF THE NEXT EVENT AND FILL LAST STOP TIME WITH END TIME
-storms<-storms%>%
+storms <- storms_full%>%
   mutate(eventstop = lead(eventstart,n=1))%>%
   mutate(eventstop = coalesce(eventstop,eventend))%>%
   select(storm_id, eventstart,eventstop,total_depth_mm)
+
+#DETERMINE THE PRECIPITATION THAT BELONGS TO WHAT STORM EVENT 
+rain[["storms"]]<-crossing(rain[["full"]],storms)%>%
+  filter(datetime >= eventstart,
+         datetime < eventstop)%>%
+  select(-c(eventstart,eventstop,total_depth_mm))
+  
 
 

@@ -24,5 +24,4 @@ statistics[["log_normality"]]  <- load%>%
   filter(normality == "normal")%>%
   arrange(pollutant)
 
-#EXPORT SHAPIRO TEST RESULTS FOR LOG TRANSFOMRED POLLUTANT DATA 
-write.csv(statistics[["log_normality"]], "03_Output/08_log_normality_testing.csv")
+

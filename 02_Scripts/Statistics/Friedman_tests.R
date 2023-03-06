@@ -14,5 +14,5 @@ statistics[["friendman"]] <- statistics[["friendman"]] %>%
                                blocks = .$storm_id)))%>%
   ungroup()%>%
   select(-c("parameter","method"))%>%
-  rename(p_value = p.value)%>%
-  mutate(p_value = round(p_value,4))
+  rename( "p_value" = "p.value")%>%
+  mutate(p_value = round(p_value,3))
