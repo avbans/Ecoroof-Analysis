@@ -67,6 +67,7 @@ graphs[["discharge_storms"]] <-  discharge[["storms"]]%>%
        fill = "Roof Type")+
   theme_classic()+
   theme(text = element_text(family = "Helvetica"),
+        axis.text.x=element_blank(),
         plot.title = element_text(hjust = 0.5),
         legend.position = "bottom")+
   facet_wrap(~storm_id, scale = "free")

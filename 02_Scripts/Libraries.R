@@ -16,9 +16,6 @@ library(lubridate)
 #FOR CREATING GRAPH LAYOUTS 
 library(patchwork)
 
-#ADDITIONAL GRAPH THEMES
-library(ggthemes)
-
 #CREATING HTML TABLES FOR MARKDOWN REPORT 
 library(kableExtra)
 

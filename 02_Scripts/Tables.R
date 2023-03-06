@@ -2,7 +2,7 @@
 tables <- list()
 
 #TABLE OF STORM EVENTS AND EXPORT 
-tables[["storms"]] <- storms2%>%
+tables[["storms"]] <- storms_full%>%
   select(-c(wateryear,eventend))%>%
   mutate(duration_hr = round(duration_hr,2),
          total_depth_mm = round(total_depth_mm,2))%>%
@@ -20,7 +20,7 @@ tables[["load_summary"]] <- statistics$distributions%>%
   mutate(roof = ifelse(roof == "eco", "Ecoroof", "Conventional"))%>%
   rename("Pollutant" = "pollutant",
          "Roof" = "roof")%>%
-  kbl(caption = "<center>Summary Table for Pollutant Unit Area Loads<center>")%>%
+  kbl(caption = "<center>Summary Table for Pollutant Unit Area Loads (mg/m^2)<center>")%>%
   kable_classic(full_width = FALSE, html_font = "Helvetica")
 
 save_kable(tables[["load_summary"]],"03_Output/Figures_Tables/load summary table.png")
