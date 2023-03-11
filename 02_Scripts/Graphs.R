@@ -12,7 +12,7 @@ graphs[["rain"]] <- left_join(discharge$full,rain$raw, by ="datetime")%>%
        y = "Depth (mm)")+
   scale_x_datetime(position = "top")+
   scale_y_reverse()+
-  theme_classic()+
+  theme_bw()+
   theme(text = element_text(family = "Helvetica"),
         plot.title = element_text(hjust = 0.5),
     panel.border = element_blank(),
@@ -37,7 +37,7 @@ graphs[["discharge"]] <- left_join(discharge$full,rain$raw, by ="datetime")%>%
   labs(x = "Date Time",
        y = "Discharge (L/s)",
        color = "Roof Type")+
-  theme_classic()+
+  theme_bw()+
   theme(text = element_text(family = "Helvetica"),
         legend.position = "bottom",
         panel.border = element_blank(),
@@ -65,7 +65,7 @@ graphs[["discharge_storms"]] <-  discharge[["storms"]]%>%
        x = "Storm Event",
        y = "Discharge (L/s)",
        fill = "Roof Type")+
-  theme_classic()+
+  theme_bw()+
   theme(text = element_text(family = "Helvetica"),
         axis.text.x=element_blank(),
         plot.title = element_text(hjust = 0.5),
@@ -84,7 +84,7 @@ graphs[["emc"]] <- samples[["storms"]]%>%
        x = "Storm Event",
        y = "EMC (mg/L)",
        color = "Roof Type")+
-  theme_classic()+
+  theme_bw()+
   theme(text = element_text(family = "Helvetica"),
         plot.title = element_text(hjust = 0.5),
         legend.position = "bottom")+
@@ -94,23 +94,25 @@ ggsave("03_Output/Figures_Tables/05_EMC.png", units = "cm", height = 20, width =
 
 
 #CUMULATIVE SUM UNIT AREA LOADING FOR SAMPLE STUDY 
-graphs[["load_cumsum"]] <- load%>%
-  arrange(roof,pollutant,storm_id)%>%
-  group_by(roof,pollutant)%>%
-  mutate(cumsum = cumsum(p_mg_m2),
-         roof = ifelse(roof == "eco", "Ecoroof", "Conventional"))%>%
-  ggplot(aes(storm_id,cumsum, fill = roof))+
-  geom_col(position = "dodge2")+
-  labs(title = "Cumulative Unit Area Load of Pollutant by Storm Event",
-       x = "Storm Event",
-       y = "Unit Area Load (mg/sq. meter)",
-       fill = "Roof Type")+
-  theme_classic()+
+graphs[["load_diff"]] <- load%>%
+  pivot_wider(names_from = roof, values_from = p_mg_m2)%>%
+  na.omit()%>%
+  mutate(dif = eco -con)%>%
+  select(storm_id,pollutant,dif)%>%
+  group_by(pollutant)%>%
+  summarise(mean_dif = mean(dif))%>%
+  filter(pollutant != "Ca")%>%
+  mutate(scaled_dif = scale(mean_dif))%>%
+  ggplot(aes(pollutant,scaled_dif))+
+  geom_col(fill = "forestgreen")+
+  labs(title = "Scaled Difference of Mean Pollutant Loads", 
+       subtitle = "Graph Excludes Ca",
+       x = "Pollutant", 
+       y = "Z Score Mean Load of Ecoroof - Conventional Roof")+
+  theme_bw()+
   theme(text = element_text(family = "Helvetica"),
-        plot.title = element_text(hjust = 0.5),
-        legend.position = "bottom")+
-  facet_wrap(~pollutant, scale ="free")
+        plot.title = element_text(hjust = 0.5))
 
-graphs[["load_cumsum"]] 
+graphs[["load_diff"]]
 
-ggsave("03_Output/Figures_Tables/06_cum_unit_area_load.png", units = "cm", width = 30, height = 20)
+ggsave("03_Output/Figures_Tables/06_diff_unit_area_load.png", units = "cm", width = 30, height = 20)

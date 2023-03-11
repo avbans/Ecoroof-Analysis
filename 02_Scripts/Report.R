@@ -4,8 +4,6 @@
 #' date: "March 5th, 2023"
 #' output:
 #'  html_document:
-#'  self_contained: yes
-#'  mode: selfcontained
 #' font-family: Times New Roman
 #' ---
 
@@ -14,7 +12,7 @@
 #'  The first goal was to analyze the runoff hydrology and chemistry 
 #'  of a seven-year-old ecoroof on top of a commercial building 
 #'  compared to a segment of conventional roof on the same 
-#'  commercial building using inferential statistical methods. 
+#'  commercial building. 
 #'  The second goal of this project was to create a reproducible reference
 #'  for Researchers, Stakeholders, and other interested parties, 
 #'  via a Markdown report and exported figures, tables, and data files. 
@@ -115,14 +113,13 @@
 #' 
 #' #### Statistical Analysis 
 #' 
-#' As this was a longitudinal study where water quality was observed between only two roof catchments via repeated measures, 
+#' As this was a longitudinal study where water quality was observed between roof catchments via repeated measures, 
 #' the observations were considered non-independent. 
-#' Additionally, the data was to be generally non-normal even after log transforming the data, 
-#' using a Shapiro-Wilk test for normality. 
-#' Thus, the differences between the pollutant unit area loading for each roof calculated during each paired storm event 
-#' was compared using a Friedman test. 
-#' A Friedman test is a non parametric inferential statistical test for comparing 2 or more groups with repeated measures. 
-#' A post-hoc test was not needed to be performed as there were only 2 groups and simple to determine which values were larger. 
+#' However, there were only two roof catchments observed and thus because the sample size was very low, we we're limited 
+#' in how we can interpret the data. We couldn't use standard statistical inferential testing. 
+#' Instead of inferential testing and their results, the summary statistics,
+#' and the scaled difference between the mean 
+#' unit area loads for the ecoroof and conventional roof were graphed. 
 #' 
 #' 
 #' ## Results 
@@ -156,21 +153,17 @@ tables[["storms"]]
 graphs$emc
 #' 
 #' 
-#' Below is the  cumulative unit area loading of each pollutant over the storm events sampled. 
-#+ echo = FALSE, warning = FALSE, fig.width = 10, fig.height = 8
-graphs$load_cumsum
-#' 
-#' 
-#' Below is the summary of the distribution of the unit area loads of the pollutants. 
+#' #' Below is the summary of the distribution of the unit area loads of the pollutants. 
 #+ echo = FALSE
 tables[["load_summary"]]
 #' 
 #' 
-#' Below is a table displaying the results of the Friedman test which indicates which roof 
-#' has a larger unit area load. 
+#' Below scaled difference between the mean unit area loads for the ecoroof and conventional roof were graphed.  
+#' Positive values and their magnitude indicate ecoroof having larger loads, 
+#' while negative values indicate larger Conventional loads. Graph excludes Ca as it was much larger than other values. 
 #' 
-#+ echo = FALSE
-tables[["friedman_results"]]
+#+ echo = FALSE, warning = FALSE, fig.width = 10, fig.height = 8
+graphs$load_diff
 #' 
 #' 
 #' ## Going Forward 

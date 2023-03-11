@@ -15,14 +15,8 @@ source("02_Scripts/Chemistry.R")
 #CALCULATE UNIT AREA LOADING OF POLLUTANTS 
 source("02_Scripts/Load.R")
 
-#TEST THE UNIT AREA LOADS FOR NORMALITY ASSUMPTIONS 
-source("02_Scripts/Statistics/Normality_testing.R")
-
-#PERFORM FRIEDMAN TEST 
-source("02_Scripts/Statistics/Friedman_tests.R")
-
 #CALCULATE DISTRIBUTIONS OF EACH POLLUTANT AND COMPILE STATISTICS 
-source("02_Scripts/Statistics/Distributions.R")
+source("02_Scripts/Distributions.R")
 
 #CALCULATE TOTAL RUNOFF VOLUME AND RUNOFF RETENTION RATE FOR SAMPLING PERIOD 
 source("02_Scripts/Retention.R")
@@ -32,6 +26,9 @@ source("02_Scripts/Tables.R")
 
 #CREATE AND EXPORT GRAPHS 
 source("02_Scripts/Graphs.R")
+
+#CREATE MAP OF PROJECT SITE 
+source("02_Scripts/Project_Map.R")
 
 #COMPILE MARKDOWN REPORT 
 source("02_Scripts/Report.R")

@@ -26,16 +26,6 @@ tables[["load_summary"]] <- statistics$distributions%>%
 save_kable(tables[["load_summary"]],"03_Output/Figures_Tables/load summary table.png")
 
 
-#TABLE OF FRIEDMAN TEST RESULTS AND EXPORT 
-tables[["friedman_results"]] <- statistics[["distributions_summary"]]%>%
-rename("Pollutant" = "pollutant",
-       "Higher Load" = "roof")%>%
-  kbl(caption = "<center>The Comparison of Pollutant Loads Between Roofs Using Friedman Test<center>")%>%
-  kable_classic(full_width = FALSE, html_font = "Helvetica")
-
-save_kable(tables[["friedman_results"]],"03_Output/Figures_Tables/friedman results table.png")
-
-
 #TABLE OF PRECIPITATION, DISCHARGE, AND RETENTION RATES AND EXPORT 
 tables[["retention"]] <- retention%>%
   select(roof,rainfall_l,volume_l,retention)%>%
@@ -49,3 +39,5 @@ tables[["retention"]] <- retention%>%
 
 save_kable(tables[["retention"]], "03_Output/Figures_Tables/retention table.png")
 
+#WE CAN REMOVE FULL STORM DATA FRAME 
+remove(storms_full)
