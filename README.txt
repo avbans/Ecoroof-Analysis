@@ -8,7 +8,7 @@ The second goal of this project was to directly be able to pipe the results of t
 analysis to create interactive dashboards using PowerBI for stakeholders to explore the data further. 
 
 #INSTALLING THE PROJECT: 
-Once the project is downloaded from GITHUB. Click on "Ecoroof Analysis.RProj" project file to access the analysis. 
+Once the project is downloaded from GITHUB. Click on the "Ecoroof Analysis.RProj" project file to access the analysis. 
 Use renv::restore() to load the appropriate packages and package versions. You may have to install the packages that you may not have. 
 
 #HOW TO USE THIS PROJECT: 

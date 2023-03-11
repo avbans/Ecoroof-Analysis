@@ -27,9 +27,6 @@ source("02_Scripts/Tables.R")
 #CREATE AND EXPORT GRAPHS 
 source("02_Scripts/Graphs.R")
 
-#CREATE MAP OF PROJECT SITE 
-source("02_Scripts/Project_Map.R")
-
 #COMPILE MARKDOWN REPORT 
 source("02_Scripts/Report.R")
 

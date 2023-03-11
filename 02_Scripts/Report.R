@@ -26,7 +26,7 @@
 #' For the full details of the project, 
 #'  including background research, sampling methods, etc. 
 #'  please refer to the original report located at 
-#'  [title] (https://pdxscholar.library.pdx.edu/open_access_etds/5577/).  
+#'  (https://pdxscholar.library.pdx.edu/open_access_etds/5577/).  
 #'  Please note the methods for data analysis and statistical testing, 
 #'  as well as assumptions used may be different from the ones 
 #'  performed in the original report. While the values may be different, the 
@@ -38,7 +38,8 @@
 #' This project was analyzed exclusively with the R language 
 #' and uses the following libraries: 
 #' data.table, tidyverse, janitor, lubridate, patchwork, here, kableExtra, 
-#' and bansr (my personal library of functions I’ve written). 
+#' and bansr (my personal library of functions I’ve written). Reports were written in 
+#' markdown using rmarkdown package. 
 #' Dependencies were managed with Renv. 
 #' 
 #' 
@@ -89,17 +90,17 @@
 #' Runoff samples results were however compared to the average field and lab blank results 
 #' and determined that in general there were no sources of contamination 
 #' from the collection and processing of the runoff samples. 
-#' It is important to note that, if there were more formal reporting 
-#' then a stricter post-lab analysis QA/QC process will need to be undertaken. 
+#' It is important to note that for more formal reporting, 
+#' a stricter post-lab analysis QA/QC process would be needed to validate the data. 
 #'  
 #' The runoff samples collected were flow-weight based, 
 #' meaning they were collected after certain volumes of discharge occurred. 
-#' This is different from time based samples which are collected in intervals of duration. 
-#' Flow weighted samples take into account the quantity of discharge. 
+#' This is different from time-based samples which are collected in intervals of duration. 
+#' Flow-weighted samples take into account the quantity of discharge. 
 #' You can thus assume the concentrations sampled at each discrete volume of discharge 
 #' is representative of the average concentration of that discharged volume of water. 
 #' For every flow-weighted sample in a storm event, 
-#' the mean was taken to determine the flow weighted event mean concentration (EMC). 
+#' the mean was taken to determine the flow-weighted event mean concentration (EMC). 
 #'  
 #'  
 #' #### Unit Area Loading 
